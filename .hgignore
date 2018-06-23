@@ -1,7 +1,5 @@
-syntax: glob
+syntax:glob
 
+target/
+*.rs.bk
 *.swp
-*.tmp
-
-*.pdb
-*.exe
