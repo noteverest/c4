@@ -1,18 +1,38 @@
 extern crate rand;
 
 // rust has something like c++ namespaces
-//use std::io;
+use std::fmt;
 
-// need to import traits for functions that rely on them
-use rand::Rng;
+// global board size constants
+const BOARD_ROWS: usize = 6;
+const BOARD_COLS: usize = 7;
+
+#[derive(Copy)]
+enum BoardSpace {
+    Empty,
+    Player1,
+    Player2,
+}
+
+impl fmt::Display for BoardSpace {
+    fn fmt( &self, f: &mut fmt::Formatter ) -> fmt::Result {
+        match self {
+            BoardSpace::Empty => write!( f, " " ),
+            BoardSpace::Player1 => write!( f, "O" ),
+            BoardSpace::Player2 => write!( f, "X" ),
+        }
+    }
+}
 
 fn main() {
     println!( "Guess the number!" );
 
-    let secret_number = rand::thread_rng().gen_range( 1, 101 );
+    let mut row: [BoardSpace; BOARD_COLS] = [ BoardSpace::Empty; BOARD_COLS ];
+    let mut board: [[BoardSpace; BOARD_COLS]; BOARD_ROWS] = [ row; BOARD_ROWS ];
 
-    //println!( "The secret number is: {}", secret_number );
+    print_board( board );
 
+    /*
     loop {
         println!( "Please input your guess." );
 
@@ -36,5 +56,17 @@ fn main() {
                 break;
             }
         }
-   }
+    }
+    */
 }
+
+fn print_board( board: [[BoardSpace; BOARD_COLS]; BOARD_ROWS] ) {
+    for row in board.iter() {
+        print!( "|" );
+        for space in row {
+            print!( " {} |", space );
+        }
+        println!( "" );
+    }
+}
+
